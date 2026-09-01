@@ -130,7 +130,15 @@ export function setActiveUser(user: User | null) {
 export function getMadrasaProfile(): MadrasaProfile {
   try {
     const data = localStorage.getItem(STORAGE_KEYS.PROFILE);
-    return data !== null ? JSON.parse(data) : DEFAULT_MADRASA_PROFILE;
+    if (data !== null) {
+      const parsed = JSON.parse(data);
+      if (!parsed.director || parsed.director.includes('আব্দুর রহমান')) {
+        parsed.director = DEFAULT_MADRASA_PROFILE.director;
+        saveMadrasaProfile(parsed);
+      }
+      return { ...DEFAULT_MADRASA_PROFILE, ...parsed };
+    }
+    return DEFAULT_MADRASA_PROFILE;
   } catch {
     return DEFAULT_MADRASA_PROFILE;
   }

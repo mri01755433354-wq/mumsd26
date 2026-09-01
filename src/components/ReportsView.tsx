@@ -11,7 +11,8 @@ import {
   ShieldCheck,
   TrendingUp,
   TrendingDown,
-  Wallet
+  Wallet,
+  ExternalLink
 } from 'lucide-react';
 import { DepartmentId, MadrasaProfile, Transaction } from '../types';
 import {
@@ -20,6 +21,7 @@ import {
   formatTaka,
   toBengaliNumber
 } from '../utils/formatters';
+import { openReportInNewWindow } from '../utils/printHelper';
 
 interface ReportsViewProps {
   transactions: Transaction[];
@@ -165,13 +167,34 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
             </p>
           </div>
 
-          <button
-            onClick={() => window.print()}
-            className="flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-emerald-950/40 border border-emerald-400/30 transition-all active:scale-95"
-          >
-            <Printer className="w-4 h-4" />
-            <span>অফিশিয়াল রিপোর্ট প্রিন্ট / PDF</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => window.print()}
+              className="flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-emerald-950/40 border border-emerald-400/30 transition-all active:scale-95 cursor-pointer"
+            >
+              <Printer className="w-4 h-4" />
+              <span>সরাসরি প্রিন্ট</span>
+            </button>
+
+            <button
+              onClick={() =>
+                openReportInNewWindow(
+                  getReportTitle(),
+                  todayStr,
+                  reportData.totalIncome,
+                  reportData.totalExpense,
+                  reportData.netBalance,
+                  reportData.deptBreakdown,
+                  reportData.list,
+                  profile
+                )
+              }
+              className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm rounded-xl border border-white/15 transition-all active:scale-95 cursor-pointer"
+            >
+              <ExternalLink className="w-4 h-4 text-teal-300" />
+              <span>নতুন ট্যাবে / PDF</span>
+            </button>
+          </div>
         </div>
 
         {/* Report Types Tabs */}
@@ -424,7 +447,10 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
           </div>
           <div>
             <div className="border-t border-white/30 pt-2 print:border-slate-600">
-              মুহতামিম / সভাপতি মহোদয়
+              মুহতামিম / পরিচালক
+            </div>
+            <div className="text-[11px] text-white/60 print:text-slate-600 font-normal mt-0.5">
+              {profile.director || 'হাফেজ মাওলানা মোঃ হাবিবুল্লাহ বাহার এম এ'}
             </div>
           </div>
         </div>
