@@ -1,0 +1,6 @@
+{
+  "name": "মদিনাতুল উলূম মাদ্রাসা - হিসাব ও ইআরপি",
+  "description": "মদিনাতুল উলূম মাদ্রাসা, ঘাটাইল এর সকল বিভাগীয় আয়-ব্যয়, ফান্ড ট্রান্সফার ও হাওলাত, শিক্ষার্থী ফি এবং অডিট রিপোর্টের আধুনিক ERP সিস্টেম",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
